@@ -5,7 +5,7 @@
 ---
 ## Lab 4 - A Reduced RISC-V CPU
 
-**_Peter Cheung, V1.1 - 14 Nov 2023_**
+**_Peter Cheung, V1.2 - 25 Oct 2024_**
 
 ---
 
@@ -13,10 +13,10 @@
 
 ## Objectives
 By the end of this experiment, you should be able to:
-* Form a Team of four members and get to know each other
-* As a team, create a Team Github repo with its initial structure
-* Each member learned how to pull and push from the repo
-* Each member understand the tasks required for Lab 4 as a Team
+* Form a team of four members and get to know each other
+* As a team, create a team Github repo with its initial structure
+* Pull and push from the repo
+* Understand the tasks required for Lab 4 as a Team
 * Allocate responsibility for each member according to the task partitioning given to you in this instruction
 * Complete the design of the Reduced RISC-V to execute the program provided
   
@@ -28,6 +28,7 @@ ___
 ___
 
 Working as a team with people you don't know is a challenge. It is often much easier to work on your own.  You are required to work as a team because:
+
 1. The coursework for this module is too large for one person to complete.
 2. You learn much more from each other provided that the "stronger" student is prepare to teach the "weaker" student - both will benefit provided that those need help are willing to admit and ask.
 3. Github was created mainly to provide a collaboration tool.  You will be forced to learn how to use Git and Github, which is part of the educational goals of this module.
@@ -44,13 +45,17 @@ ___
 ___
 
 
->Choose among the Team a Repo Master, who is reponsible to create the repo and  make sure that all other team member learn how to do it themselves if needed. All member should also learn how to branch, pull, push and commit to the repo.  Discuss among yourself an initial structure of the repo and a set of common practices that your Team should follow. 
+>Choose among the Team a Repo Master, who is reponsible to create the repo and  make sure that all other team member learn how to do it themselves if needed. All members should also learn how to branch, pull, push and commit to the repo.  Discuss among yourself an initial structure of the repo and a set of common practices that your Team should follow. 
 
 You can find a very helpful guide on how to set up your repo in Github [here](https://docs.github.com/en/get-started/quickstart/create-a-repo "How to create a repo").
 
-The Repo Master should now create a repo for the team with the name **TeamXX**, where 'XX" is the team number provided by me in the Teams List.  
+The Repo Master should now create a repo for the team with a name that **ends** in the team number, which is provided by me in the Teams List (e.g. `Team21` or `RISC-V-Team5`)
 
-The Repo Master must then give permission to all team members AND ME, so that every member can access the repo, and I can see what your team is doing.  I will be checking on the progress of all teams by the end of next week on Lab 4.
+The Repo Master must then give permission to all team members AND ME (also the TAs if you want), so that every member can access the repo, and I can see what your team is doing.  I will be checking on the progress of all teams by the end of next week on Lab 4.
+
+A starting repo is available in the [`repo`](repo) folder. You may copy the files over, or start
+from scratch. If you decide to start from scratch, your repo must be able to run our integration
+tests from a single script, like the [`doit.sh`](repo/tb/doit.sh) script.
 
 ___
 
@@ -65,7 +70,7 @@ ___
 
 ___
 
-Your team task for Lab 4 is to design a *__SINGLE CYCLE__* CPU that executes two (or three) RISC-V instructions.  To verify that your design works, the CPU should execute the simple assembly language program below: <br><br>
+Your team task for Lab 4 is to design a *__SINGLE CYCLE__* CPU that executes two (or three) RISC-V instructions.  To verify that your design works, the CPU should execute the simple assembly language program below (see [`program.S`](repo/tb/asm/program.S)): <br><br>
 
 <p align="center"> <img src="images/code1.jpg" /> </p> <br>
 
@@ -73,7 +78,7 @@ This program performs the same function as the simple 8-bit binary counter you d
 
 <p align="center"> <img src="images/pseudo.jpg" /> </p><BR>
 
-> Each student should take one addi and one bne instruction, and check you fully understand why the instruction is map to this machine code.  (See Lecture 6 slide 7.)
+> Each student should take one addi and one bne instruction, and check you fully understand why the instruction is mapped to this machine code. (See Lecture 6 slide 7.)
 
 <br>
 
@@ -95,7 +100,7 @@ To help you progress quickly, here is the top-level block diagram for this CPU. 
 
 <p align="center"> <img src="images/microarchitecture.jpg" /> </p><br>
 
->Discuss among yourselves why the WRITE port of the Register File must be synchrous to the clock signal.
+>Discuss among yourselves why the WRITE port of the Register File must be synchronous to the clock signal.
 
 ___
 
@@ -105,9 +110,12 @@ ___
 
 In a team project, there is always a danger that a team member is too keen and able, and wanting so much the team to succeed that they "hog" the project and do everything.  Or a team member is trying to do as little as possible and just be a passenger.  Therefore, the task in this Lab is divided into four separate components as shaded blocks, one for each team member as followings:
 1. Program Counter and related adders.
-2. The Register File, ALU and the related MUX.
+2. The Register File, ALU and the related [MUX](repo/rtl/mux.sv).
 3. The Control Unit, the Sign-extension Unit and the instruction memory.
-4. The testbench and verification of the design working via gtkWave and Vbuddy (where appropriate).
+4. The testbench and verification of the whole design working via gtkWave and Vbuddy (where appropriate).
+
+If you are doing verification, please read this guide: 
+[`verification.md`](verification.md)
 
 >Discuss and agree among yourselves who does what.  
 >Complete the Lab 4 Team's Survey [here](https://forms.office.com/r/n2zeXxxvaJ "Survey").  Only ONE survey per team.
@@ -123,7 +131,11 @@ ___
 >Each member should define the interface signals of the modules for which they are responsible. The test person should create a test plan. 
 <br>
 
-Please use the signal names as shown in the block diagram. This allows TAs and myself to help you debug your design easier without having  to discover your naming convention.
+The block diagram shown above has no style convention. You may wish to follow
+the diagram exactly, or use a style convention. I recommend the one [here](
+https://www.systemverilog.io/verification/styleguide/). Please keep the names
+of the signals the same (e.g. `RegWrite` could be `reg_write`).
+This allows TAs and myself to help you debug your design easier without having to discover your naming convention.
 
 <br>
 
@@ -139,7 +151,7 @@ ___
       lw    a0, 0(a1)
 ```
 
-This is  the implementation of the Lab 2 sinewave generator using RISC-V instructions!
+This is the implementation of the Lab 2 sinewave generator using RISC-V instructions!
 
 <br><br>
 
@@ -152,7 +164,7 @@ ___
 Note that Lab 4 is designed to be a formative assessment exercise.  The deliverables here are designed to help you learn and to self-assess how you and your team are doing.  I and the TAs will also provide informal feedback to you during Lab Sessions.  **This will NOT contribute towards the final coursework marks**.
 
 >On the repo for your team, you should have:
->1. A README.md that show evidences of the CPU working properly with the program.
+>1. A README.md that show evidences of the CPU working properly with the program. 
 >2. A short narrative to state the challenges you encountered as a team. 
 >3. Comments about any design decisions you made that are not obvious.
 >4. A reflection on what you might do differently if you were to start again.
