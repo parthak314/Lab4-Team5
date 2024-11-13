@@ -67,6 +67,27 @@ If you are using the attached repository, it will
 will be useful later (ignore this for now).
 - generate a .vcd (waveform) file in the `tb` folder.
 
+## How should I think?
+
+This section will cover unit testbenches, as the test programs will be provided
+on the spec release.
+
+Whilst it may seem like duplicated work to write unit testbenches (if you are
+writing a golden C++ model), oftentimes this gives a lot more freedom to the
+RTL writers to implement their model, without worrying about causing bugs later
+down the line.
+
+I have not been very involved in the hardware verification space after this
+coursework last year. Therefore I do not know every single best practice, but
+these are some good guidelines:
+- keep tests simple
+- test the **_behaviour_**, not the implementation
+- include some tests for simple cases (e.g. on reset)
+
+There is a whole space on hardware verification, and there are loads of other
+guides that go into a lot more depth. However, this should be enough
+information for this coursework.
+
 ## Yeah, so what do I do?
 
 The choice is yours, refer to the [aims](#aims) to guide you, and then use your

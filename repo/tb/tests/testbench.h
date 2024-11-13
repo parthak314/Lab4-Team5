@@ -9,8 +9,14 @@
 class Testbench : public BaseTestbench
 {
 public:
+    void SetUp() override
+    {
+        BaseTestbench::SetUp();
+        runReset();
+    }
+
     // Runs the simulation for a clock cycle, evaluates the DUT, dumps waveform.
-    void runSimulation(int cycles)
+    void runSimulation(int cycles = 1)
     {
         for (int i = 0; i < cycles; i++)
         {
@@ -27,5 +33,12 @@ public:
                 exit(0);
             }
         }
+    }
+
+    void runReset()
+    {
+        top->rst = 1;
+        runSimulation();
+        top->rst = 0;
     }
 };
