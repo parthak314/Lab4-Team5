@@ -4,13 +4,14 @@ module pc_register # (
     input logic clk,
     input logic rst,
     input logic [DATA_WIDTH-1:0] next_PC,
-    input output [DATA_WIDTH-1:0] out_PC
-)
+    output logic [DATA_WIDTH-1:0] out_PC
+);
 
-    reg [DATA_WIDTH-1:0] PC
+    reg [DATA_WIDTH-1:0] PC;
 
     always_ff @ (posedge clk) begin
-        PC <= next_PC;
+        if (rst) PC <= {DATA_WIDTH{1'b0}};
+        else PC <= next_PC;
     end
 
     assign out_PC = PC;
