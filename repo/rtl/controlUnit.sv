@@ -1,4 +1,6 @@
-module controlUnit (
+module controlUnit # (
+    parameter DATA_WIDTH = 32
+)(
     input   logic       EQ,
     input   logic       instr,
     output  logic       RegWrite,
