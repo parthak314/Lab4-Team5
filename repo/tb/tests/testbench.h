@@ -9,12 +9,6 @@
 class Testbench : public BaseTestbench
 {
 public:
-    void SetUp() override
-    {
-        BaseTestbench::SetUp();
-        runReset();
-    }
-
     // Runs the simulation for a clock cycle, evaluates the DUT, dumps waveform.
     void runSimulation(int cycles = 1)
     {
@@ -23,7 +17,9 @@ public:
             for (int clk = 0; clk < 2; clk++)
             {
                 top->eval();
+#ifndef __APPLE__
                 tfp->dump(2 * ticks + clk);
+#endif
                 top->clk = !top->clk;
             }
             ticks++;
@@ -35,10 +31,9 @@ public:
         }
     }
 
-    void runReset()
+    void compile(const std::string &program)
     {
-        top->rst = 1;
-        runSimulation();
-        top->rst = 0;
+        // Compile
+        system(("./compile.sh " + program).c_str());
     }
 };
