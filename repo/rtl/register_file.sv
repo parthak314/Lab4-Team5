@@ -2,7 +2,7 @@ module register_file #(
     parameter   DATA_WIDTH = 32,
                 ADDRESS_WIDTH = 5
 )(
-    input logic CLK,
+    input logic clk,
     input logic [ADDRESS_WIDTH-1:0]  AD1, 
     input logic [ADDRESS_WIDTH-1:0]  AD2, 
     input logic [ADDRESS_WIDTH-1:0]  AD3, // Address 3 
@@ -20,7 +20,7 @@ always_comb begin
     RD2 = reg_file[AD2];
 end
 
-always @ (posedge CLK) begin
+always @ (posedge clk) begin
     if (WE3) begin
         reg_file[AD3] <= WD3;
         A0 <= reg_file[AD3];
