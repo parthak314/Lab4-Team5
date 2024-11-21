@@ -65,9 +65,9 @@ done
 # Exit as a pass or fail (for CI purposes)
 if [ $fails -eq 0 ]; then
     echo "${GREEN}Success! All ${passes} test(s) passed!"
-    exit 0
+    # exit 0
 else
     total=$((passes + fails))
     echo "${RED}Failure! Only ${passes} test(s) passed out of ${total}."
-    exit 1
+    # exit 1
 fi

@@ -1,9 +1,9 @@
-module top #(
+module alu_top #(
     parameter   DATA_WIDTH = 32,
                 ADDRESS_WIDTH = 5
 ) (
     input   logic                       clk,
-    input logic                         ALUctrl,
+    input logic [2:0]                   ALUctrl,
     input logic                         ALUsrc,
     input logic [ADDRESS_WIDTH-1:0]     rs1, 
     input logic [ADDRESS_WIDTH-1:0]     rs2, 
@@ -19,14 +19,13 @@ module top #(
     logic [DATA_WIDTH-1:0]          ALUop1;
     logic [DATA_WIDTH-1:0]          regOp2;
 
-
 assign a0 = 32'd5;
 
 alu myalu (
     .ALUop1(ALUop1),
     .ALUop2(ALUop2),
     .ALUctrl(ALUctrl),
-    .AluOUT(ALUout),
+    .ALUout(ALUout),
     .EQ(EQ)
 );
 
