@@ -1,5 +1,5 @@
-module rom #(
-    parameter ADDRESS_WIDTH = 16,
+module instr_mem #(
+    parameter ADDRESS_WIDTH = 32,
               DATA_WIDTH = 32
 )(
     input logic [ADDRESS_WIDTH-1:0] addr,
