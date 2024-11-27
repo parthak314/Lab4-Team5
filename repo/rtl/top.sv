@@ -1,5 +1,5 @@
 module top #(
-    DATA_WIDTH = 32
+    parameter DATA_WIDTH = 32
 ) (
     input   logic clk,
     input   logic rst,
@@ -18,13 +18,14 @@ module top #(
         .PC(pc)
     );
 
-    rom instr_mem_mod (
+    instr_mem instr_mem_mod (
         .addr(pc),
         .instr(instr)
     );
 
     control_unit control_mod (
         .op(instr[6:0]),
+        .func3(instr[14:12]),
         .eq(eq),
         .PCsrc(pcsrc),
         .ALUctrl(aluctrl),
@@ -50,6 +51,6 @@ module top #(
         .ImmOp(immop),
         .a0(a0),
         .EQ(eq)
-    )
+    );
 
 endmodule
