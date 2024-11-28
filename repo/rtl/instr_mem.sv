@@ -15,6 +15,7 @@ initial begin
 end;
 
     always_comb begin
+        // We are currently throwing away the top few bits, not ideal implementation
         instr = {rom_array[addr[15:0]+3], rom_array[addr[15:0]+2], rom_array[addr[15:0]+1], rom_array[addr[15:0]+0]}; //converts word addressing to decimal addressing
         if(addr[31:16] == 16'b0) ;
     end
