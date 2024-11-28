@@ -12,14 +12,11 @@ module control_unit #(
     logic branch;
     always_comb begin
         case (op)
-            7'b0000011: begin RegWrite = 1'b1; ImmSrc = 1'b0; ALUsrc = 1'b1; branch = 1'b0; ALUctrl = 3'b000; end
-            7'b0100011: begin RegWrite = 1'b0; ImmSrc = 1'b1; ALUsrc = 1'b1; branch = 1'b0; ALUctrl = 3'b000; end
-            7'b0110011: begin RegWrite = 1'b1; ImmSrc = 1'b0; ALUsrc = 1'b0; branch = 1'b0; ALUctrl = 3'b000; end
             7'b1100011: begin RegWrite = 1'b0; ImmSrc = 1'b1; ALUsrc = 1'b0; branch = 1'b1; ALUctrl = 3'b001; end // bne
-            7'b0010011: begin RegWrite = 1'b1; ImmSrc = 1'b1; ALUsrc = 1'b1; branch = 1'b0; ALUctrl = 3'b000; end
+            7'b0010011: begin RegWrite = 1'b1; ImmSrc = 1'b1; ALUsrc = 1'b1; branch = 1'b0; ALUctrl = 3'b000; end // addi
             default: begin RegWrite = 1'b1; ImmSrc = 1'b0; ALUsrc = 1'b1; branch = 1'b0; ALUctrl = 3'b000; end
         endcase
-    PCsrc = branch && !eq;
+    PCsrc = branch && ~eq;
     if (func3 == 3'b000) ;
     end
 
