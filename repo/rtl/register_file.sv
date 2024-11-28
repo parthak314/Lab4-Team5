@@ -23,7 +23,7 @@ end
 always @ (posedge clk) begin
     if (WE3) begin
         reg_file[AD3] <= WD3;
-        A0 <= reg_file[0];
+        A0 <= reg_file[10];
     end
 end   
 
