@@ -1,23 +1,20 @@
 module instr_mem #(
-    parameter ADDRESS_WIDTH = 16,
+    parameter ADDRESS_WIDTH = 32,
               DATA_WIDTH = 8
 )(
-    input logic [32-1:0] addr,
-    output logic [32-1:0] instr
+    input logic     [ADDRESS_WIDTH-1:0] addr,
+    output logic    [31:0] instr
 );
 
-logic [DATA_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
+logic [DATA_WIDTH-1:0] rom_array [32'h00000FFF:0]; // instruction ROM from 0xBFC00FFF to 0xBFC00000 as in memory map
 
 initial begin
     $display("Loading rom.");
     $readmemh("../rtl/program.hex", rom_array); 
-    //this allows ROM to be loaded with content stored in sinerom.mem
 end;
 
     always_comb begin
-        // We are currently throwing away the top few bits, not ideal implementation
-        instr = {rom_array[addr[15:0]+3], rom_array[addr[15:0]+2], rom_array[addr[15:0]+1], rom_array[addr[15:0]+0]}; //converts word addressing to decimal addressing
-        if(addr[31:16] == 16'b0) ;
+        instr = {rom_array[addr+3], rom_array[addr+2], rom_array[addr+1], rom_array[addr+0]}; // assemble 32-bit word from 4 bytes
     end
 
 endmodule
