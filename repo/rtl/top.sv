@@ -8,6 +8,7 @@ module top #(
     logic [DATA_WIDTH-1:0] pc, instr, immop;
     logic eq, pcsrc, alusrc, immsrc, regwrite;
     logic [2:0] aluctrl;
+    logic [11:0] imm;
 
     pc_top pc_top_mod (
         .clk(clk),
@@ -33,8 +34,13 @@ module top #(
         .RegWrite(regwrite)
     );
 
+    ins_type ins_type_mod (
+        .instr(instr),
+        .imm(imm)
+    );
+
     signext signext_mod (
-        .instr(instr[31:20]),
+        .instr(imm),
         .immSrc(immsrc),
         .immOp(immop)
     );
