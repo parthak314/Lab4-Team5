@@ -16,6 +16,7 @@ end;
 
     always_comb begin
         instr = {rom_array[addr[15:0]+3], rom_array[addr[15:0]+2], rom_array[addr[15:0]+1], rom_array[addr[15:0]+0]}; //converts word addressing to decimal addressing
+        if(addr[31:16] == 16'b0) ;
     end
 
 endmodule

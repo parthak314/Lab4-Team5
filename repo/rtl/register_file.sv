@@ -18,7 +18,7 @@ logic[DATA_WIDTH-1:0] reg_file [0:2**ADDRESS_WIDTH-1];
 always_comb begin
     RD1 = reg_file[AD1];
     RD2 = reg_file[AD2];
-    A0 <= reg_file[10];
+    A0 = reg_file[10];
 end
 
 always @ (posedge clk) begin
