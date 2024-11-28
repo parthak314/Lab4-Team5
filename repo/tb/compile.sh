@@ -24,6 +24,7 @@ if [ $file_extension == "c" ]; then
                             -march=rv32im -mabi=ilp32 \
                             -o "${basename}.s" $input_file \
                             -Wno-unused-result
+    # To get test case 24 passing, you need to modify ^^^^
     input_file="${basename}.s"
 fi
 

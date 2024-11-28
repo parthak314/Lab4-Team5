@@ -45,7 +45,8 @@ for file in "${files[@]}"; do
                 -y ${RTL_FOLDER} \
                 --prefix "Vdut" \
                 -o Vdut \
-                -LDFLAGS "-lgtest -lgtest_main -lpthread" \
+                -CFLAGS "-isystem /opt/homebrew/Cellar/googletest/1.15.2/include"\
+                -LDFLAGS "-L/opt/homebrew/Cellar/googletest/1.15.2/lib -lgtest -lgtest_main -lpthread" \
 
     # Build C++ project with automatically generated Makefile
     make -j -C obj_dir/ -f Vdut.mk
@@ -65,9 +66,9 @@ done
 # Exit as a pass or fail (for CI purposes)
 if [ $fails -eq 0 ]; then
     echo "${GREEN}Success! All ${passes} test(s) passed!"
-    # exit 0
+    exit 0
 else
     total=$((passes + fails))
     echo "${RED}Failure! Only ${passes} test(s) passed out of ${total}."
-    # exit 1
+    exit 1
 fi
